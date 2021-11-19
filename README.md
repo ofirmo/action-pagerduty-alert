@@ -20,6 +20,18 @@ Sends a critical PagerDuty alert, e.g. on action failure.
 **Optional:** a `dedup_key` for your alert. This will enable PagerDuty to coalesce multiple alerts into one.
 More documentation is available [here](https://developer.pagerduty.com/docs/events-api-v2/trigger-events/).
 
+`incident-summary`
+
+**Optional:** a custom summary for your PagerDuty alert
+
+`incident-region`
+
+**Optional:** the region where the incident occurred
+
+`incident-environment`
+
+**Optional:** the environment where the incident occurred
+
 ## Example usage
 
 In your `steps`:
@@ -27,7 +39,7 @@ In your `steps`:
 ```yaml
 - name: Send PagerDuty alert on failure
   if: ${{ failure() }}
-  uses: Entle/action-pagerduty-alert@0.1.0
+  uses: miparnisari/action-pagerduty-alert
   with:
     pagerduty-integration-key: '${{ secrets.PAGERDUTY_INTEGRATION_KEY }}'
     pagerduty-dedup-key: github_workflow_failed
