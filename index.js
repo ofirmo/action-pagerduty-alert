@@ -25,7 +25,7 @@ async function sendAlert(alert) {
     const dedupKey = core.getInput('pagerduty-dedup-key');
     const environment = core.getInput('incident-environment');
 
-    const alert: EventPayloadV2 = {
+    const alert = {
       payload: {
         summary: `${context.repo.repo}: Error in "${context.workflow}" run by @${context.actor}`,
         timestamp: new Date().toISOString(),
