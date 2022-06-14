@@ -19,8 +19,13 @@ async function sendAlert(alert) {
 (async () => {
   try {
     const integrationKey = core.getInput('pagerduty-integration-key');
+    const customDetails = JSON.parse(core.getInput('incident-custom-details'));
+    const customSummary = core.getInput('incident-summary');
+    const region = core.getInput('incident-region');
+    const dedupKey = core.getInput('pagerduty-dedup-key');
+    const environment = core.getInput('incident-environment');
 
-    let alert = {
+    const alert: EventPayloadV2 = {
       payload: {
         summary: `${context.repo.repo}: Error in "${context.workflow}" run by @${context.actor}`,
         timestamp: new Date().toISOString(),
@@ -31,29 +36,26 @@ async function sendAlert(alert) {
           related_commits: context.payload.commits
             ? context.payload.commits.map((commit) => `${commit.message}: ${commit.url}`).join(', ')
             : 'No related commits',
+          ...customDetails,
         },
       },
       routing_key: integrationKey,
       event_action: 'trigger',
     };
 
-    const customSummary = core.getInput('incident-summary');
-    if (customSummary != '') {
+    if (customSummary !== '') {
       alert.payload.summary = customSummary;
     }
 
-    const region = core.getInput('incident-region');
-    if (region != '') {
+    if (region !== '') {
       alert.payload.custom_details.region = region;
     }
 
-    const environment = core.getInput('incident-environment');
-    if (environment != '') {
+    if (environment !== '') {
       alert.payload.custom_details.environment = environment;
     }
 
-    const dedupKey = core.getInput('pagerduty-dedup-key');
-    if (dedupKey != '') {
+    if (dedupKey !== '') {
       alert.dedup_key = dedupKey;
     }
     await sendAlert(alert);

@@ -1,24 +1,27 @@
-name: 'PagerDuty Alert Remastered'
-description: 'GitHub Action to send a critical PagerDuty alert, e.g. on action failure.'
+name: "PagerDuty Alert Remastered"
+description: "GitHub Action to send a critical PagerDuty alert, e.g. on action failure."
 inputs:
   pagerduty-integration-key:
-    description: 'The integration key for your PagerDuty service'
+    description: "The integration key for your PagerDuty service"
     required: true
   pagerduty-dedup-key:
-    description: 'The key used to correlate PagerDuty triggers, acknowledges, and resolves for the same alert.'
+    description: "The key used to correlate PagerDuty triggers, acknowledges, and resolves for the same alert."
     required: false
   incident-summary:
-    description: 'A custom summary for your PagerDuty alert'
+    description: "A custom summary for your PagerDuty alert"
     required: false
   incident-region:
-    description: 'The region where the incident occurred'
+    description: "The region where the incident occurred"
     required: false
   incident-environment:
-    description: 'The environment where the incident occurred'
+    description: "The environment where the incident occurred"
+    required: false
+  incident-custom-details:
+    description: "Custom details object of the PagerDuty alert"
     required: false
 runs:
-  using: 'node12'
-  main: 'index.js'
+  using: "node12"
+  main: "index.js"
 branding:
-  icon: 'alert-triangle'
-  color: 'red'
+  icon: "alert-triangle"
+  color: "red"
